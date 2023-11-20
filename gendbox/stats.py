@@ -1,4 +1,4 @@
-from koru.preprocessing.normalization import MinMax as __minmax
+from gendbox.preprocessing.normalization import MinMax as __minmax
 import pandas as __dep_pd
 import numpy as __dep_np
 
@@ -37,11 +37,11 @@ def cor(data):
         _data = data.copy()
         data_type = 'pandas_series'
         data = data.tolist()
-    if isinstance(data, __dep_np.Matrix):
+    if isinstance(data, __dep_np.matrix):
         _data = data.copy()
         data_type = 'numpy_matrix'
         data = data.tolist()
-    if isinstance(data, __dep_np.ndarray()):
+    if isinstance(data, __dep_np.ndarray):
         _data = data.copy()
         data_type = 'numpy_ndarray'
         data = data.tolist()
@@ -53,8 +53,8 @@ def cor(data):
                 corr = __cor([row[i] for row in data], [row[j] for row in data])
                 cor_row.append(corr)
             cor_data.append(cor_row)
-        if data_type == 'pandas_df':
-            cor_data = __dep_np.DataFrame(data=cor_data, columns=_data.columns, index=_data.columns)
+        if data_type == 'pandas_dataframe':
+            cor_data = __dep_pd.DataFrame(data=cor_data, columns=_data.columns, index=_data.columns)
         return cor_data
     else:
         raise TypeError('The type data is not compatible.')
