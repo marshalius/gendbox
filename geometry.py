@@ -112,16 +112,4 @@ class Rectangle:
     def calculate_diagonal(x_side:float, y_side:float)->float:
         diagonal = (x_side**2 + y_side**2)**0.5
         return diagonal
-    
-    
-class MyDrawingLibrary:
-    def __init__(self):
-        self.lines = []
-
-    def draw_line(self, start, end):
-        self.lines.append((start, end))
-
-    def display(self):
-        for line in self.lines:
-            print(f"Drawing line from {line[0]} to {line[1]}")
 

@@ -1,0 +1,25 @@
+package:
+  name: gendbox
+  version: 0.1.0
+
+source:
+  path: .
+
+build:
+  script: python -m pip install --no-deps --ignore-installed .
+
+requirements:
+  build:
+    - python
+    - setuptools
+  run:
+    - python
+    - numpy
+    - pandas
+
+about:
+  home: https://github.com/marshalius/gendbox
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  summary: No description
