@@ -6,15 +6,21 @@ class MinMax:
         self.max_value = None
     
     def fit(self, data):
-        self.min_value = min(data)
-        self.max_value = max(data)
+        try:
+            self.min_value = min(data)
+            self.max_value = max(data)
+        except Exception as e:
+            print(f'An unexcepted error has occured: {e}')
     
     def transform(self, data):
-        new_list = []
-        for value in data:
-            normalized_value = (value - self.min_value) / (self.max_value - self.min_value)
-            new_list.append(normalized_value)
-        return new_list
+        try:
+            new_list = []
+            for value in data:
+                normalized_value = (value - self.min_value) / (self.max_value - self.min_value)
+                new_list.append(normalized_value)
+            return new_list
+        except Exception as e:
+            print(f'An unexcepted error has occured: {e}')
     
     def fit_transform(self, data):
         self.fit(data)

@@ -7,7 +7,6 @@ gendbox/stats.py
 gendbox.egg-info/PKG-INFO
 gendbox.egg-info/SOURCES.txt
 gendbox.egg-info/dependency_links.txt
-gendbox.egg-info/requires.txt
 gendbox.egg-info/top_level.txt
 gendbox/learning/__init__.py
 gendbox/learning/supervised.py
