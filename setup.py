@@ -3,7 +3,7 @@ from pathlib import Path
 
 setup(
     name='gendbox',
-    version='0.1.5',
+    version='0.2.0',
     description='Açıklama',
     author='Candaş Koru',
     packages=find_packages(),

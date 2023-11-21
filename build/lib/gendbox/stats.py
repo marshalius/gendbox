@@ -1,12 +1,13 @@
-def mean(data):
+def mean(data:list):
     try:
         mean = sum(data) / len(data)
         return mean
+    except ValueError:
+        print("A list consisting of only numbers must be entered as a parameter.")
     except Exception as e:
         print(f'An unexcepted error has occured: {e}')
 
-
-def med(data):
+def med(data:list):
     try:
         sorted_data = sorted(data)
         median = 0.0
@@ -15,19 +16,84 @@ def med(data):
         else:
             median = sorted_data[int((len(sorted_data)-1)/2)]
         return median
+    except ValueError:
+        print("A list consisting of only numbers must be entered as a parameter.")
     except Exception as e:
         print(f'An unexpected error has occured: {e}')
 
-def std(data):
+def lowerq(data:list):
+    if len(data) < 4:
+        raise ValueError('The length of the list must be at least 4 to lower quartile calculation.')
+        return None
     try:
-        if len(data) == 1:
-            return 0.0
+        sorted_data = sorted(data)
+        lowerset = None
+        if len(data) % 2 == 0:
+            lowerset = sorted_data[:len(data)/2]
+        else:
+            lowerset = sorted_data[:len(data)//2]
+        q1 = None
+        if len(lowerset) % 2 == 0:
+            q1 = mean(lowerset[len(lowerset)/2-1, len(lowerset)/2])
+        else:
+            q1 = lowerset[len(lowerset)//2]
+        return q1
+    except ValueError:
+        print("A list consisting of only numbers must be entered as a parameter.")
+    except Exception as e:
+        print(f'An unexpected error has occured: {e}')
+
+def upperq(data:list):
+    if len(data) < 4:
+        raise ValueError('The length of the list must be at least 4 to upper quartile calculation.')
+        return None
+    try:
+        sorted_data = sorted(data)
+        upperset = None
+        if len(data) % 2 == 0:
+            upperset = sorted_data[len(data)/2:]
+        else:
+            upperset = sorted_data[len(data)//2+1:]
+        q3 = None
+        if len(upperset) % 2 == 0:
+            q3 = mean(upperset[len(upperset)/2-1, len(upperset)/2])
+        else:
+            q3 = upperset[len(upperset)//2]
+        return q3
+    except ValueError:
+        print("A list consisting of only numbers must be entered as a parameter.")
+    except Exception as e:
+        print(f'An unexpected error has occured: {e}')
+            
+def iqr(data:list):
+    if len(data) < 4:
+        raise ValueError('The length of the list must be at least 4 to Interquartile Range calculation.')
+        return None
+    try:
+        q1 = lowerq(data)
+        q3 = upperq(data)
+        return q3 - q1
+    except ValueError:
+        print("A list consisting of only numbers must be entered as a parameter.")
+    except Exception as e:
+        print(f'An unexpected error has occured: {e}')
+
+def std(data:list, sample:bool=True):
+    try:
         std = 0.0
         mean_ = mean(data)
         total = 0.0
         for value in data:
             total = total + (value-mean_)**2
-        std = (total/(len(data)-1))**0.5
+        if sample == True:
+            if len(data) == 1:
+                return 0.0
+            std = (total/(len(data)-1))**0.5
+        else:
+            if len(data) == 0:
+                raise ValueError('The list cannot be empty.')
+                return None
+            std = (total/len(data))**0.5
         return std
     except ValueError:
         print("A list consisting of only numbers must be entered as a parameter.")
