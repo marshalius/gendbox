@@ -4,6 +4,7 @@ setup.py
 gendbox/__init__.py
 gendbox/geometry.py
 gendbox/stats.py
+gendbox/utils.py
 gendbox.egg-info/PKG-INFO
 gendbox.egg-info/SOURCES.txt
 gendbox.egg-info/dependency_links.txt
@@ -12,3 +13,6 @@ gendbox/learning/__init__.py
 gendbox/learning/supervised.py
 gendbox/preprocessing/__init__.py
 gendbox/preprocessing/normalization.py
+tests/test_geometry.py
+tests/test_stats.py
+tests/test_utils.py
