@@ -56,11 +56,8 @@ class Circle:
 
 class Square:
     
-    def __init__(self):
-        pass
-    
     def __init__(self, side:float=None):
-        if side != None:
+        if side is not None:
             self.side = side
             self.area = Square.calculate_area(side)
             self.diagonal = Square.calculate_diagonal(side)

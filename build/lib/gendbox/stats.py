@@ -1,7 +1,16 @@
-def mean(data:list):
+def mean(data):
     try:
-        mean = sum(data) / len(data)
-        return mean
+        from gendbox.utils import _DataConverter, _is_matrix
+        conv = _DataConverter(data)
+        data = conv._convert_to_list()
+        mean_ = None
+        if _is_matrix(data):
+            length = len(data) * len(data[0])
+            total = sum([sum(row) for row in data])
+            mean_ = total/length
+        else:
+            mean_ = sum(data)/len(data)
+        return mean_
     except ValueError:
         print("A list consisting of only numbers must be entered as a parameter.")
     except Exception as e:
@@ -101,6 +110,8 @@ def cor(data):
     try:
         from gendbox.utils import _DataConverter, _is_matrix, _cor
         conv = _DataConverter(data)
+        if str(type(data)) == "<class 'pandas.core.frame.DataFrame'>":
+            conv.index_ = data.columns
         data = conv._convert_to_list()
         if _is_matrix(data):
             cor_data = []

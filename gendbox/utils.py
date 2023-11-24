@@ -2,37 +2,45 @@ class _DataConverter:
     def __init__(self, data):
         self.original_ = data
         self.type_ = str(type(data))
+        self.index_ = None
         self.converted_ = None
     
     def _convert_to_list(self):
-        if self.type_ == "<class 'pandas.core.frame.DataFrame'>":
-            self.converted_ = self.original_.values.tolist()
-        elif(self.type_ == "<class 'pandas.core.series.Series'>" or 
-           self.type_ == "<class 'numpy.matrix'>" or 
-           self.type_ == "<class 'numpy.ndarray'>"):
-            self.converted_ = self.original_.tolist()
-        else:
-            self.converted_ = self.original_
-        return self.converted_
+        try:
+            if self.type_ == "<class 'pandas.core.frame.DataFrame'>":
+                self.converted_ = self.original_.values.tolist()
+            elif(self.type_ == "<class 'pandas.core.series.Series'>" or 
+               self.type_ == "<class 'numpy.matrix'>" or 
+               self.type_ == "<class 'numpy.ndarray'>"):
+                self.converted_ = self.original_.tolist()
+            else:
+                self.converted_ = self.original_
+            return self.converted_
+        except  Exception as e:
+            print(f'An unexcepted error has occured: {e}')
+    
     def _unconvert(self, data=None):
-        new_data = None
-        if data == None:
-            data == self.converted_
-        if self.type_ == "<class 'pandas.core.frame.DataFrame'>":
-            from pandas import DataFrame
-            new_data = DataFrame(data=data, columns=self.original_.columns, index=self.original_.columns)
-        elif self.type_ == "<class 'pandas.core.series.Series'>":
-            from pandas import Series
-            new_data = Series(data)
-        elif self.type_ == "<class 'numpy.matrix'>":
-            from numpy import matrix
-            new_data = matrix(data)
-        elif self.type_ == "<class 'numpy.ndarray'>":
-            from numpy import array
-            new_data = array(data)
-        else:
-            new_data = data
-        return new_data
+        try:
+            new_data = None
+            if data is None:
+                data == self.converted_
+            if self.type_ == "<class 'pandas.core.frame.DataFrame'>":
+                from pandas import DataFrame
+                new_data = DataFrame(data=data, columns=self.original_.columns, index=self.index_)
+            elif self.type_ == "<class 'pandas.core.series.Series'>":
+                from pandas import Series
+                new_data = Series(data)
+            elif self.type_ == "<class 'numpy.matrix'>":
+                from numpy import matrix
+                new_data = matrix(data)
+            elif self.type_ == "<class 'numpy.ndarray'>":
+                from numpy import array
+                new_data = array(data)
+            else:
+                new_data = data
+            return new_data
+        except Exception as e:
+            print(f'An unexcepted error has occured: {e}')
 
 
 def _cor(x, y):

@@ -11,8 +11,22 @@ class MinMax:
                str(type(data)) == "<class 'numpy.matrix'>" or 
                str(type(data)) == "<class 'numpy.ndarray'>"):
                 data = data.tolist()
-            self.min_value = min(data)
-            self.max_value = max(data)
+            from gendbox.utils import _is_matrix
+            if _is_matrix(data):
+                min_values = []
+                max_values = []
+                for row in data:
+                    if _is_matrix(row):
+                        raise ValueError('The array must have 1 or 2 dimension.')
+                    min_values.append(min(row))
+                    max_values.append(max(row))
+                self.min_value = min(min_values)
+                self.max_value = max(max_values)
+            else: 
+                self.min_value = min(data)
+                self.max_value = max(data)
+        except ValueError as e:
+            print(e)
         except Exception as e:
             print(f'An unexcepted error has occured: {e}')
     
@@ -22,10 +36,12 @@ class MinMax:
             conv = _DataConverter(data)
             data = conv._convert_to_list()
             new_data = []
+            
             if _is_matrix(data):
                 for i in range(0, len(data)):
                     new_row = []
-                    for value in range(0, len(data[0])):
+                    for j in range(0, len(data[i])):
+                        value = data[i][j]
                         normalized_value = (value - self.min_value) / (self.max_value - self.min_value)
                         new_row.append(normalized_value)
                     new_data.append(new_row)
@@ -33,6 +49,7 @@ class MinMax:
                 for value in data:
                     normalized_value = (value - self.min_value) / (self.max_value - self.min_value)
                     new_data.append(normalized_value)
+            print('DATA:', new_data)
             new_data = conv._unconvert(new_data)
             return new_data
         except Exception as e:
